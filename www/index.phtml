@@ -1,0 +1,33 @@
+<?php include('../src/indexController.php'); ?>
+<html>
+<?php include('components/styles.phtml') ?>
+<body>
+<div class="container">
+    <?php include('components/header.phtml') ?>
+
+    <div class="jumbotron">
+        <h1 class="display-3">Login</h1>
+        <p class="lead">
+            <select id="login">
+                <option value="">-- Select User --</option>
+                <?php foreach ($results as $user): ?>
+                    <option value="<?= $user['ID'] ?>">
+                        <?= $user['FIRST_NAME'] ?> <?= $user['LAST_NAME'] ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </p>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#login').change(function () {
+            if ($(this).val() != '') {
+                window.location = 'movies.phtml?u=' + $(this).val();
+            }
+        });
+    });
+</script>
+</body>
+</html>
