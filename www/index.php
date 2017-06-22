@@ -1,9 +1,9 @@
 <?php include('../src/indexController.php'); ?>
 <html>
-<?php include('components/styles.phtml') ?>
+<?php include('components/styles.php') ?>
 <body>
 <div class="container">
-    <?php include('components/header.phtml') ?>
+    <?php include('components/header.php') ?>
 
     <div class="jumbotron">
         <h1 class="display-3">Login</h1>
@@ -24,7 +24,7 @@
     $(function () {
         $('#login').change(function () {
             if ($(this).val() != '') {
-                window.location = 'movies.phtml?u=' + $(this).val();
+                window.location = 'movies.php?u=' + $(this).val();
             }
         });
     });

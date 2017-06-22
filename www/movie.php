@@ -1,9 +1,9 @@
 <?php include('../src/movieController.php'); ?>
 <html>
-<?php include('components/styles.phtml') ?>
+<?php include('components/styles.php') ?>
 <body>
 <div class="container">
-    <?php include('components/header.phtml') ?>
+    <?php include('components/header.php') ?>
 
     <div class="jumbotron">
         <div class="float-right text-right">

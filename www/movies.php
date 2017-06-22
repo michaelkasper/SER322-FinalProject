@@ -1,9 +1,9 @@
 <?php  include('../src/moviesController.php');?>
 <html>
-<?php include('components/styles.phtml') ?>
+<?php include('components/styles.php') ?>
 <body>
 <div class="container">
-    <?php include('components/header.phtml') ?>
+    <?php include('components/header.php') ?>
 
     <?php if (count($genres) > 0): ?>
         <div class="container">
@@ -32,7 +32,7 @@
             <?php foreach ($movieResults as $movieResult): ?>
                 <tr>
                     <td>
-                        <a href="movie.phtml?u=<?= $_GET['u'] ?>&m=<?= $movieResult['ID'] ?>"><?= $movieResult['NAME'] ?></a>
+                        <a href="movie.php?u=<?= $_GET['u'] ?>&m=<?= $movieResult['ID'] ?>"><?= $movieResult['NAME'] ?></a>
                     </td>
                     <td><?= $movieResult['MPAA_RATING'] ?></td>
                     <td><?= $movieResult['RELEASE_DATE'] ?></td>

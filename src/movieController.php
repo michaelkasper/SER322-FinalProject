@@ -11,7 +11,7 @@ $db = new db();
 
 if (!isset($_GET['m']) || !is_numeric($_GET['m'])) {
     // return, bad id
-    header('location: movies.phtml?u=' . $_GET['u']);
+    header('location: movies.php?u=' . $_GET['u']);
     exit();
 }
 
@@ -35,7 +35,7 @@ $movieResults = $db->query("
 
 if (count($movieResults) < 1) {
     // return, bad id
-    header('location: movies.phtml?u=' . $_GET['u']);
+    header('location: movies.php?u=' . $_GET['u']);
     exit();
 }
 $movieResult = $movieResults[0];

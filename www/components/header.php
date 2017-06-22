@@ -5,7 +5,7 @@
             <ul class="nav nav-pills float-right">
                 <?php if ($config['showBack']): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="movies.phtml?u=<?= $_GET['u'] ?>">Back</a>
+                        <a class="nav-link" href="movies.php?u=<?= $_GET['u'] ?>">Back</a>
                     </li>
                 <?php endif; ?>
                 <?php if ($config['showLogout']): ?>
