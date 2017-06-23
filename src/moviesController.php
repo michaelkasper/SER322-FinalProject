@@ -31,6 +31,7 @@ if (!isset($_GET['g']) || !is_numeric($_GET['g'])) {
           m.`ID`, 
           m.`NAME`, 
           m.`RELEASE_DATE`, 
+          m.`MPAA_RATING`,
           m.`ID`, 
           r.`RATING`
         FROM MOVIE m 
