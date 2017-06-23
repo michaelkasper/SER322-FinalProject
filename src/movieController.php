@@ -23,7 +23,6 @@ $movieResults = $db->query("
       m.`ID`, 
       m.`NAME`, 
       m.`RELEASE_DATE`, 
-      m.`ID`, 
       m.`PLOT_SUMMARY`,
       m.`MPAA_RATING`,
       r.`RATING` 
