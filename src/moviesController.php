@@ -32,7 +32,6 @@ if (!isset($_GET['g']) || !is_numeric($_GET['g'])) {
           m.`NAME`, 
           m.`RELEASE_DATE`, 
           m.`MPAA_RATING`,
-          m.`ID`, 
           r.`RATING`
         FROM MOVIE m 
         JOIN IN_GENRE g ON g.`MOVIE_ID` = m.`ID` AND g.`GENRE_ID` = '{$db->escape($_GET['g'])}'
