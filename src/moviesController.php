@@ -40,6 +40,38 @@ if (!isset($_GET['g']) || !is_numeric($_GET['g'])) {
         ");
 }
 
+//select movie that user entered in the movieText textbox
+if(isset($_GET['movieText'])) {
+	$movieResults = $db->query("
+	SELECT 
+	m.`ID`, 
+          m.`NAME`, 
+          m.`RELEASE_DATE`, 
+		  m.`MPAA_RATING`,
+          m.`ID`, 
+          r.`RATING`
+        FROM MOVIE m 
+		WHERE 
+		m.`NAME` = '{$db->escape($_GET['movieText'])}'
+	");
+}
+
+//select movies that user entered in the firstName and lastName textbox
+if(isset($_GET['firstName']) && isset($_GET['lastName'])) {
+	$movieResults = $db->query("
+	SELECT 
+	m.`ID`, 
+          m.`NAME`, 
+          m.`RELEASE_DATE`, 
+		  m.`MPAA_RATING`,
+          m.`ID`, 
+          r.`RATING`
+        FROM MOVIE m, in_movie im, professional p
+		WHERE 
+		p.`FIRST_NAME` = '{$db->escape($_GET['firstName'])}' AND p.`LAST_NAME` = '{$db->escape($_GET['lastName'])}' AND p.`ID` = im.`PROFESSIONAL_ID AND m.`ID` = im.`MOVIE_ID`
+	");
+}
+
 // Get all genres
 $genres = $db->query('
     SELECT 
