@@ -4,6 +4,11 @@
 <body>
 <div class="container">
     <?php include('components/header.php') ?>
+    <ul class="nav nav-pills float-right">
+        <li class="nav-item">
+            <a class="nav-link" href="movies.php?<?=buildQueryString([],['m','r'])?>">Back</a>
+        </li>
+    </ul>
 
     <div class="jumbotron">
         <div class="float-right text-right">
@@ -12,7 +17,9 @@
             <div class="rating-block">
                 Rate:
                 <?php for ($i = 1 ;$i <= 5 ;$i++): ?>
-                    <button onclick="window.location = '?u=<?= $_GET['u'] ?>&m=<?= $movieResult['ID'] ?>&r=<?= $i ?>'" type="button" class="btn <?= ($movieResult['RATING'] * 1 >= $i ? 'btn-warning' : 'btn-default btn-grey') ?> btn-sm rounded-circle"></button>
+                    <button onclick="window.location = '?<?= buildQueryString([
+                        'm' => $movieResult['ID'], 'r' => $i
+                    ]) ?>'" type="button" class="btn <?= ($movieResult['RATING'] * 1 >= $i ? 'btn-warning' : 'btn-default btn-grey') ?> btn-sm rounded-circle"></button>
                 <?php endfor ; ?>
             </div>
         </div>
@@ -24,6 +31,12 @@
             <label for="example-text-input" class="col-2 col-form-label">Release Date</label>
             <div class="col-10">
                 <input class="form-control" type="text" value="<?= $movieResult['RELEASE_DATE'] ?>" readonly>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label">Genres</label>
+            <div class="col-10">
+                <input class="form-control" type="text" value="<?= $movieResult['GENRES'] ?>" readonly>
             </div>
         </div>
         <div class="form-group row">
@@ -48,7 +61,9 @@
                 <tbody>
                 <?php foreach ($professionals as $professional): ?>
                     <tr>
-                        <td><?= $professional['FIRST_NAME'] ?> <?= $professional['LAST_NAME'] ?></td>
+                        <td>
+                            <a href="professional.php?<?= buildQueryString(['p' => $professional['ID']]) ?>"><?= $professional['FIRST_NAME'] ?> <?= $professional['LAST_NAME'] ?></a>
+                        </td>
                         <td><?= $professional['ROLE'] ?></td>
                     </tr>
                 <?php endforeach; ?>

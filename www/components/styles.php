@@ -9,5 +9,8 @@
 
         .rating-block > button { padding : 8px; cursor : pointer; }
 
+        .no-top, .no-top th{
+            border-top : none;
+        }
     </style>
 </head>

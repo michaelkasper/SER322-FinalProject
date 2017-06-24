@@ -1,39 +1,41 @@
-<?php  include('../src/moviesController.php');?>
+<?php include('../src/moviesController.php'); ?>
 <html>
 <?php include('components/styles.php') ?>
 <body>
 <div class="container">
     <?php include('components/header.php') ?>
 
-    <?php if (count($genres) > 0): ?>
-        <div class="container">
-            <nav class="nav nav-pills">
-                <span class="nav-link">Sort By Genre:</span>
-                <?php foreach ($genres as $genre): ?>
-                    <a class="nav-link <?= ($_GET['g'] == $genre['ID'] ? 'active' : '') ?>" href="?u=<?= $_GET['u'] ?>&g=<?= $genre['ID'] ?>"><?= $genre['NAME'] ?></a>
-                <?php endforeach; ?>
-                <a class="nav-link" href="?u=<?= $_GET['u'] ?>">(clear)</a>
-            </nav>
+    <form action="?<?= buildQueryString([], ['movieText']) ?>" method="GET">
+        <div class="input-group">
+            <div class="input-group-addon">Search</div>
+            <input type="text" class="form-control" name="movieText" value="<?= $_GET['movieText'] ?>">
         </div>
-        <br/>
-    <?php endif; ?>
-    
-	<div class="container">
-		<nav class="nav nav-pills">
-			<form action="movies.php?u= <?= $_GET['u'] ?>" method="GET">
-				<span class="nav-link">Find Movie:</span> <input type="text" name="movieText" size="30" />
-				<span class="nav-link">Find Movies Of Actor:</span> <input type="text" name="firstName" size="15"/><input type="text" name="lastName" size="15"/> </br>
-				<input type="submit" name="sbmt" value="Search" />
-			</form>
-		</nav>
-	</div>
-    
+        <button type="submit" class="btn btn-primary float-right">Search</button>
+        <a class="btn btn-default float-right" href="?<?= buildQueryString([], ['movieText']) ?>">Clear</a>
+
+        <?= buildHiddenInputs([], ['movieText', 'r', 'm']); ?>
+    </form>
+
+
     <div class="table-responsive">
-        <table class="table table-striped">
+        <ul class="nav nav-tabs">
+            <li class="nav-item"><span class="nav-link disabled">Sort By Genre:</span></li>
+            <li class="nav-item">
+                <a class="nav-link <?= (!isset($_GET['g']) ? 'active' : '') ?>" href="?<?= buildQueryString([], ['g']) ?>">All</a>
+            </li>
+            <?php foreach ($genres as $genre): ?>
+                <li class="nav-item">
+                    <a class="nav-link <?= ($_GET['g'] == $genre['ID'] ? 'active' : '') ?>" href="?<?= buildQueryString(['g' => $genre['ID']]) ?>"><?= $genre['NAME'] ?></a>
+                </li>
+            <?php endforeach; ?>
+
+        </ul>
+        <table class="table table-striped no-top">
             <thead>
             <tr>
                 <th>Title</th>
                 <th>Rating</th>
+                <th>Genres</th>
                 <th>ReleaseDate</th>
                 <th>Rating</th>
             </tr>
@@ -42,14 +44,17 @@
             <?php foreach ($movieResults as $movieResult): ?>
                 <tr>
                     <td>
-                        <a href="movie.php?u=<?= $_GET['u'] ?>&m=<?= $movieResult['ID'] ?>"><?= $movieResult['NAME'] ?></a>
+                        <a href="movie.php?<?= buildQueryString(['m' => $movieResult['ID']]) ?>"><?= $movieResult['NAME'] ?></a>
                     </td>
                     <td><?= $movieResult['MPAA_RATING'] ?></td>
+                    <td><?= $movieResult['GENRES'] ?></td>
                     <td><?= $movieResult['RELEASE_DATE'] ?></td>
                     <td>
                         <div class="rating-block">
                             <?php for ($i = 1 ;$i <= 5 ;$i++): ?>
-                                <button onclick="window.location = '?u=<?= $_GET['u'] ?>&g=<?= $_GET['g'] ?>&m=<?= $movieResult['ID'] ?>&r=<?= $i ?>'" type="button" class="btn <?= ($movieResult['RATING'] * 1 >= $i ? 'btn-warning' : 'btn-default btn-grey') ?> btn-sm rounded-circle"></button>
+                                <button onclick="window.location = '?<?= buildQueryString([
+                                    'm' => $movieResult['ID'], 'r' => $i
+                                ]) ?>'" type="button" class="btn <?= ($movieResult['RATING'] * 1 >= $i ? 'btn-warning' : 'btn-default btn-grey') ?> btn-sm rounded-circle"></button>
                             <?php endfor ; ?>
                         </div>
                     </td>

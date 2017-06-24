@@ -1,6 +1,6 @@
 <?php
-include_once('db.php');
-$db      = new db();
+include_once('abstractController.php');
+
 $results = $db->query('
     SELECT 
       u.`ID`,
@@ -10,6 +10,7 @@ $results = $db->query('
     ');
 
 $config = [
-    'showLogout' => false,
-    'showBack'   => false
+    'showNav'             => false,
+    'moviesActive'        => false,
+    'professionalsActive' => false,
 ];

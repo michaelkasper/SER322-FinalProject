@@ -1,75 +1,78 @@
 <?php
-include_once('db.php');
-
-if (!isset($_GET['u']) || !is_numeric($_GET['u'])) {
-    // return, no user id
-    header('location: /');
-    exit();
-}
-
-$db = new db();
-
+include_once('abstractController.php');
 include('updateRating.php');
 
-if (!isset($_GET['g']) || !is_numeric($_GET['g'])) {
-    // no genre selected, show all
+// Would prefer to build query as string, but broke
+// out into individuals queries to help with
+// readability for instructor
+if (isset($_GET['g'], $_GET['movieText']) && is_numeric($_GET['g']) && $_GET['movieText'] != '') {
+    // filter on genre and name
     $movieResults = $db->query("
-        SELECT 
-          m.`ID`, 
-          m.`NAME`, 
-          m.`RELEASE_DATE`, 
-          m.`MPAA_RATING`, 
-          r.`RATING` 
-        FROM MOVIE m 
-        LEFT JOIN RATING r ON r.`MOVIE_ID` = m.`ID` AND r.`USER_ID` ='{$db->escape($_GET['u'])}'
-        ORDER BY m.`NAME` ASC
-        ");
+SELECT 
+  m.`ID`, 
+  m.`NAME`, 
+  m.`RELEASE_DATE`, 
+  m.`MPAA_RATING`, 
+  r.`RATING`,
+  g.`NAME` as GENRES
+FROM MOVIE m 
+LEFT JOIN RATING r ON r.`MOVIE_ID` = m.`ID` AND r.`USER_ID` ='{$db->escape($_GET['u'])}'
+JOIN IN_GENRE in_g ON in_g.`MOVIE_ID` = m.`ID` AND in_g.`GENRE_ID` = '{$db->escape($_GET['g'])}'
+JOIN GENRE g ON in_g.`GENRE_ID` = g.`ID`
+Where m.NAME LIKE '{$db->escape($_GET['movieText'])}%'
+ORDER BY m.`NAME` ASC
+");
+} else if (isset($_GET['g']) && is_numeric($_GET['g'])) {
+    // filter on genre only
+    $movieResults = $db->query("
+SELECT 
+  m.`ID`, 
+  m.`NAME`, 
+  m.`RELEASE_DATE`, 
+  m.`MPAA_RATING`, 
+  r.`RATING`,
+  g.`NAME` as GENRES
+FROM MOVIE m 
+LEFT JOIN RATING r ON r.`MOVIE_ID` = m.`ID` AND r.`USER_ID` ='{$db->escape($_GET['u'])}'
+JOIN IN_GENRE in_g ON in_g.`MOVIE_ID` = m.`ID` AND in_g.`GENRE_ID` = '{$db->escape($_GET['g'])}'
+JOIN GENRE g ON in_g.`GENRE_ID` = g.`ID`
+ORDER BY m.`NAME` ASC
+");
+} else if (isset($_GET['movieText']) && $_GET['movieText'] != '') {
+    // filter on name only
+    $movieResults = $db->query("
+SELECT 
+  m.`ID`, 
+  m.`NAME`, 
+  m.`RELEASE_DATE`, 
+  m.`MPAA_RATING`, 
+  r.`RATING`,
+  GROUP_CONCAT(DISTINCT g.`NAME`) as GENRES 
+FROM MOVIE m 
+LEFT JOIN RATING r ON r.`MOVIE_ID` = m.`ID` AND r.`USER_ID` ='{$db->escape($_GET['u'])}'
+LEFT JOIN IN_GENRE in_g ON in_g.`MOVIE_ID` = m.`ID`
+LEFT JOIN GENRE g ON in_g.`GENRE_ID` = g.`ID`
+Where m.NAME LIKE '{$db->escape($_GET['movieText'])}%'
+GROUP BY g.`NAME`
+ORDER BY m.`NAME` ASC
+");
 } else {
-    // filter by genre
+    // dont filter at all
     $movieResults = $db->query("
-        SELECT 
-          m.`ID`, 
-          m.`NAME`, 
-          m.`RELEASE_DATE`, 
-          m.`MPAA_RATING`,
-          r.`RATING`
-        FROM MOVIE m 
-        JOIN IN_GENRE g ON g.`MOVIE_ID` = m.`ID` AND g.`GENRE_ID` = '{$db->escape($_GET['g'])}'
-        LEFT JOIN RATING r ON r.`MOVIE_ID` = m.`ID` AND r.`USER_ID` ='{$db->escape($_GET['u'])}'
-        ORDER BY m.`NAME` ASC
-        ");
-}
-
-//select movie that user entered in the movieText textbox
-if(isset($_GET['movieText'])) {
-	$movieResults = $db->query("
-	SELECT 
-	m.`ID`, 
-          m.`NAME`, 
-          m.`RELEASE_DATE`, 
-		  m.`MPAA_RATING`,
-          m.`ID`, 
-          r.`RATING`
-        FROM MOVIE m 
-		WHERE 
-		m.`NAME` = '{$db->escape($_GET['movieText'])}'
-	");
-}
-
-//select movies that user entered in the firstName and lastName textbox
-if(isset($_GET['firstName']) && isset($_GET['lastName'])) {
-	$movieResults = $db->query("
-	SELECT 
-	m.`ID`, 
-          m.`NAME`, 
-          m.`RELEASE_DATE`, 
-		  m.`MPAA_RATING`,
-          m.`ID`, 
-          r.`RATING`
-        FROM MOVIE m, in_movie im, professional p
-		WHERE 
-		p.`FIRST_NAME` = '{$db->escape($_GET['firstName'])}' AND p.`LAST_NAME` = '{$db->escape($_GET['lastName'])}' AND p.`ID` = im.`PROFESSIONAL_ID AND m.`ID` = im.`MOVIE_ID`
-	");
+SELECT 
+  m.`ID`, 
+  m.`NAME`, 
+  m.`RELEASE_DATE`, 
+  m.`MPAA_RATING`, 
+  r.`RATING`,
+  GROUP_CONCAT(DISTINCT g.`NAME`) as GENRES 
+FROM MOVIE m 
+LEFT JOIN RATING r ON r.`MOVIE_ID` = m.`ID` AND r.`USER_ID` ='{$db->escape($_GET['u'])}'
+LEFT JOIN IN_GENRE in_g ON in_g.`MOVIE_ID` = m.`ID`
+LEFT JOIN GENRE g ON in_g.`GENRE_ID` = g.`ID`
+GROUP BY g.`NAME`
+ORDER BY m.`NAME` ASC
+");
 }
 
 // Get all genres
@@ -82,6 +85,8 @@ $genres = $db->query('
     ');
 
 $config = [
-    'showLogout' => true,
-    'showBack'   => false
+    'showNav'             => true,
+    'moviesActive'        => true,
+    'professionalsActive' => false,
 ];
+

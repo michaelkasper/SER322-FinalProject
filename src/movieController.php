@@ -1,20 +1,5 @@
 <?php
-include_once('db.php');
-
-if (!isset($_GET['u']) || !is_numeric($_GET['u'])) {
-    // return, no user id
-    header('location: /');
-    exit();
-}
-
-$db = new db();
-
-if (!isset($_GET['m']) || !is_numeric($_GET['m'])) {
-    // return, bad id
-    header('location: movies.php?u=' . $_GET['u']);
-    exit();
-}
-
+include_once('abstractController.php');
 include('updateRating.php');
 
 // no genre selected
@@ -25,22 +10,27 @@ $movieResults = $db->query("
       m.`RELEASE_DATE`, 
       m.`PLOT_SUMMARY`,
       m.`MPAA_RATING`,
-      r.`RATING` 
+      r.`RATING`,
+      GROUP_CONCAT(DISTINCT g.`NAME`) as GENRES 
     FROM MOVIE m 
     LEFT JOIN RATING r ON r.`MOVIE_ID` = m.`ID` AND r.`USER_ID` ='{$db->escape($_GET['u'])}'
+    LEFT JOIN IN_GENRE in_g ON in_g.`MOVIE_ID` = m.`ID`
+    LEFT JOIN GENRE g ON in_g.`GENRE_ID` = g.`ID`
     WHERE m.`ID`='{$db->escape($_GET['m'])}'
+    GROUP BY g.`NAME`
     LIMIT 1
     ");
 
 if (count($movieResults) < 1) {
     // return, bad id
-    header('location: movies.php?u=' . $_GET['u']);
+    header('location: movies.php?' . buildQueryString([],['m',['r']]));
     exit();
 }
 $movieResult = $movieResults[0];
 
 $professionals = $db->query("
     SELECT 
+      p.`ID`,
       p.`FIRST_NAME`,
       p.`LAST_NAME`,
       m.`ROLE`
@@ -50,6 +40,7 @@ $professionals = $db->query("
     ");
 
 $config = [
-    'showLogout' => true,
-    'showBack'   => true
+    'showNav'             => true,
+    'moviesActive'        => true,
+    'professionalsActive' => false,
 ];
