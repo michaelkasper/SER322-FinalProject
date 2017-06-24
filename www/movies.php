@@ -17,7 +17,17 @@
         </div>
         <br/>
     <?php endif; ?>
-
+    
+	<div class="container">
+		<nav class="nav nav-pills">
+			<form action="movies.php?u= <?= $_GET['u'] ?>" method="GET">
+				<span class="nav-link">Find Movie:</span> <input type="text" name="movieText" size="30" />
+				<span class="nav-link">Find Movies Of Actor:</span> <input type="text" name="firstName" size="15"/><input type="text" name="lastName" size="15"/> </br>
+				<input type="submit" name="sbmt" value="Search" />
+			</form>
+		</nav>
+	</div>
+    
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
