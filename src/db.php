@@ -11,6 +11,18 @@ class db
         OR die('Could not connect to MySQL ' . mysqli_connect_error());
     }
 
+    public function insert($query, $ignoreErrors = false)
+    {
+        $response = @mysqli_query($this->dbc, $query);
+        if ($response) {
+            return $response;
+        } else if (!$ignoreErrors) {
+            echo 'QUERY: '.$query.'/r';
+            echo mysqli_error($this->dbc);
+            exit;
+        }
+    }
+
     public function query($query, $ignoreErrors = false)
     {
         $response = @mysqli_query($this->dbc, $query);
@@ -20,11 +32,16 @@ class db
                 $select[] = $row;
             }
             return $select;
-        } else if(!$ignoreErrors) {
+        } else if (!$ignoreErrors) {
             echo mysqli_error($this->dbc);
             exit;
         }
         return [];
+    }
+
+    public function getInsertId()
+    {
+        return mysqli_insert_id($this->dbc);
     }
 
     public function escape($string)

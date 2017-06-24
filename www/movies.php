@@ -35,6 +35,7 @@
             <tr>
                 <th>Title</th>
                 <th>Rating</th>
+                <th>Runtime</th>
                 <th>Genres</th>
                 <th>ReleaseDate</th>
                 <th>Rating</th>
@@ -47,10 +48,11 @@
                         <a href="movie.php?<?= buildQueryString(['m' => $movieResult['ID']]) ?>"><?= $movieResult['NAME'] ?></a>
                     </td>
                     <td><?= $movieResult['MPAA_RATING'] ?></td>
+                    <td><?= $movieResult['RUNTIME']*1 ?> min</td>
                     <td><?= $movieResult['GENRES'] ?></td>
                     <td><?= $movieResult['RELEASE_DATE'] ?></td>
                     <td>
-                        <div class="rating-block">
+                        <div class="rating-block" style="white-space: nowrap">
                             <?php for ($i = 1 ;$i <= 5 ;$i++): ?>
                                 <button onclick="window.location = '?<?= buildQueryString([
                                     'm' => $movieResult['ID'], 'r' => $i

@@ -1,10 +1,10 @@
 <?php
 
-if (basename($_SERVER['PHP_SELF'], '.php') != 'index' && (!isset($_GET['u']) || !is_numeric($_GET['u']))) {
-    // return, no user id
-    header('location: /');
-    exit();
-}
+//if (basename($_SERVER['PHP_SELF'], '.php') != 'index' && (!isset($_GET['u']) || !is_numeric($_GET['u']))) {
+//    // return, no user id
+//    header('location: /');
+//    exit();
+//}
 
 include_once('db.php');
 $db = new db();

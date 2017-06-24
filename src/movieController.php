@@ -10,6 +10,8 @@ $movieResults = $db->query("
       m.`RELEASE_DATE`, 
       m.`PLOT_SUMMARY`,
       m.`MPAA_RATING`,
+      m.`RUNTIME`,
+      m.`POSTER`,
       r.`RATING`,
       GROUP_CONCAT(DISTINCT g.`NAME`) as GENRES 
     FROM MOVIE m 

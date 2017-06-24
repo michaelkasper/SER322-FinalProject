@@ -13,6 +13,7 @@ SELECT
   m.`NAME`, 
   m.`RELEASE_DATE`, 
   m.`MPAA_RATING`, 
+  m.`RUNTIME`,
   r.`RATING`,
   g.`NAME` as GENRES
 FROM MOVIE m 
@@ -30,6 +31,7 @@ SELECT
   m.`NAME`, 
   m.`RELEASE_DATE`, 
   m.`MPAA_RATING`, 
+  m.`RUNTIME`,
   r.`RATING`,
   g.`NAME` as GENRES
 FROM MOVIE m 
@@ -46,6 +48,7 @@ SELECT
   m.`NAME`, 
   m.`RELEASE_DATE`, 
   m.`MPAA_RATING`, 
+  m.`RUNTIME`,
   r.`RATING`,
   GROUP_CONCAT(DISTINCT g.`NAME`) as GENRES 
 FROM MOVIE m 
@@ -53,7 +56,7 @@ LEFT JOIN RATING r ON r.`MOVIE_ID` = m.`ID` AND r.`USER_ID` ='{$db->escape($_GET
 LEFT JOIN IN_GENRE in_g ON in_g.`MOVIE_ID` = m.`ID`
 LEFT JOIN GENRE g ON in_g.`GENRE_ID` = g.`ID`
 Where m.NAME LIKE '{$db->escape($_GET['movieText'])}%'
-GROUP BY g.`NAME`
+GROUP BY m.`ID`
 ORDER BY m.`NAME` ASC
 ");
 } else {
@@ -64,13 +67,14 @@ SELECT
   m.`NAME`, 
   m.`RELEASE_DATE`, 
   m.`MPAA_RATING`, 
+  m.`RUNTIME`,
   r.`RATING`,
   GROUP_CONCAT(DISTINCT g.`NAME`) as GENRES 
 FROM MOVIE m 
 LEFT JOIN RATING r ON r.`MOVIE_ID` = m.`ID` AND r.`USER_ID` ='{$db->escape($_GET['u'])}'
 LEFT JOIN IN_GENRE in_g ON in_g.`MOVIE_ID` = m.`ID`
 LEFT JOIN GENRE g ON in_g.`GENRE_ID` = g.`ID`
-GROUP BY g.`NAME`
+GROUP BY m.`ID`
 ORDER BY m.`NAME` ASC
 ");
 }

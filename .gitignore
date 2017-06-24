@@ -2,3 +2,5 @@
 *.local.php
 .idea
 ~$*.docx
+src/imdb2
+getMovies.php
