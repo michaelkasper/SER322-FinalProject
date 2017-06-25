@@ -20,7 +20,7 @@
         <button type="submit" class="btn btn-primary">Search</button>
         &nbsp;
         <a class="btn btn-default" href="?<?= buildQueryString([], ['firstName', 'lastName']) ?>">Clear</a>
-        <?= buildHiddenInputs([], ['firstName', 'LastName']); ?>
+        <?= buildHiddenInputs([], ['firstName', 'lastName']); ?>
     </form>
 
 
