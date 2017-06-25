@@ -1,6 +1,9 @@
 <?php
 ini_set('display_errors', '0');
 
+/**
+ * security check
+ */
 if (basename($_SERVER['PHP_SELF'], '.php') != 'index' && (!isset($_GET['u']) || !is_numeric($_GET['u']))) {
     // return, no user id
     header('location: index.php');
@@ -10,6 +13,9 @@ if (basename($_SERVER['PHP_SELF'], '.php') != 'index' && (!isset($_GET['u']) || 
 include_once('db.php');
 $db = new db();
 
+/**
+ * view helpers
+ */
 function mergeAndClean(array $newValues = [], array $removeValues = [])
 {
     $parameters = array_merge($_GET, $newValues);

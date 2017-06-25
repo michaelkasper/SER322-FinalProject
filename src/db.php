@@ -26,6 +26,7 @@ class db
             echo mysqli_error($this->dbc);
             exit;
         }
+        return false;
     }
 
     public function query($query, $ignoreErrors = false)

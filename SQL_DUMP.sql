@@ -17898,7 +17898,11 @@ LOCK TABLES `USER` WRITE;
 
 INSERT INTO `USER` (`ID`, `FIRST_NAME`, `LAST_NAME`, `EMAIL`)
 VALUES
-  (1,'Mike','Kasper',NULL);
+  (1,'Mike','Kasper',NULL),
+  (2,'Robert','Lankford',NULL),
+  (3,'Sean','Rogers',NULL),
+  (4,'Ajay','Bansal',NULL),
+  (5,'Mahmudul','Hassan',NULL);
 
 /*!40000 ALTER TABLE `USER` ENABLE KEYS */;
 UNLOCK TABLES;
