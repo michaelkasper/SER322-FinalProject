@@ -2,7 +2,7 @@
 
 if (basename($_SERVER['PHP_SELF'], '.php') != 'index' && (!isset($_GET['u']) || !is_numeric($_GET['u']))) {
     // return, no user id
-    header('location: /');
+    header('location: index.php');
     exit();
 }
 
