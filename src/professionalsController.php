@@ -45,7 +45,7 @@ SELECT
   GROUP_CONCAT(DISTINCT m.`Role`) as ROLES 
 FROM PROFESSIONAL p 
 LEFT JOIN IN_MOVIE m ON m.`PROFESSIONAL_ID` = p.`ID`
-WHERE p.`LAST_NAME LIKE` '{$db->escape($_GET['lastName'])}%'
+WHERE p.`LAST_NAME` LIKE '{$db->escape($_GET['lastName'])}%'
 GROUP BY p.`ID`
 ORDER BY p.`FIRST_NAME`, p.`LAST_NAME` ASC
 ");
