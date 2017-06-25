@@ -18,18 +18,20 @@
 
 
     <div class="table-responsive">
-        <ul class="nav nav-tabs">
-            <li class="nav-item"><span class="nav-link disabled">Sort By Genre:</span></li>
-            <li class="nav-item">
-                <a class="nav-link <?= (!isset($_GET['g']) ? 'active' : '') ?>" href="?<?= buildQueryString([], ['g']) ?>">All</a>
-            </li>
-            <?php foreach ($genres as $genre): ?>
-                <li class="nav-item">
-                    <a class="nav-link <?= ($_GET['g'] == $genre['ID'] ? 'active' : '') ?>" href="?<?= buildQueryString(['g' => $genre['ID']]) ?>"><?= $genre['NAME'] ?></a>
-                </li>
-            <?php endforeach; ?>
+	<div class="dropdown">
+	  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	    Sort by Genre 
+	  </button>
+	  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+	        <a class="dropdown-item" <?= (!isset($_GET['g']) ? 'active' : '') ?>" href="?<?= buildQueryString([], ['g']) ?>">All</a>
+		<?php foreach ($genres as $genre): ?>
+			<a class="dropdown-item" <?= ($_GET['g'] == $genre['ID'] ? 'active' : '') ?>" href="?<?= buildQueryString(['g' => $genre['ID']]) ?>"><?= $genre['NAME'] ?></a>
+		<?php endforeach; ?>
 
-        </ul>
+	  </div>
+	</div>
+
+
         <table class="table table-striped no-top">
             <thead>
             <tr>
