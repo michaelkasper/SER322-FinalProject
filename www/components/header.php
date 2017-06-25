@@ -14,12 +14,12 @@
 
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link <?= $config['moviesActive'] ? 'active' : ''; ?>" href="/movies.php?<?= buildQueryString([], [
+                <a class="nav-link <?= $config['moviesActive'] ? 'active' : ''; ?>" href="/SER322-FinalProject-master/SER322-FinalProject-master/www/movies.php?<?= buildQueryString([], [
                     'm', 'p', 'r'
                 ]) ?>">Movies</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= $config['professionalsActive'] ? 'active' : ''; ?>" href="/professionals.php?<?= buildQueryString([], [
+                <a class="nav-link <?= $config['professionalsActive'] ? 'active' : ''; ?>" href="/SER322-FinalProject-master/SER322-FinalProject-master/www/professionals.php?<?= buildQueryString([], [
                     'm', 'p', 'r'
                 ]) ?>">Professionals</a>
             </li>
