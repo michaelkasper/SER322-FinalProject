@@ -16,22 +16,25 @@
         <?= buildHiddenInputs([], ['movieText', 'r', 'm']); ?>
     </form>
 
+    <div class="input-group">
+        <div class="input-group-addon">Sort by Genre:</div>
+        <div class="dropdown">
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" <?= (!isset($_GET['g']) ? 'active' : '') ?>" href="?<?= buildQueryString([], ['g']) ?>">All</a>
+                <?php $selectedValue = 'All'; ?>
+                <?php foreach ($genres as $genre): ?>
+                    <?php if($_GET['g'] == $genre['ID']){$selectedValue=$genre['NAME'];} ?>
+                    <a class="dropdown-item" href="?<?= buildQueryString(['g' => $genre['ID']]) ?>"><?= $genre['NAME'] ?></a>
+                <?php endforeach; ?>
+
+            </div>
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <?= $selectedValue ?>
+            </button>
+        </div>
+    </div>
 
     <div class="table-responsive">
-	<div class="dropdown">
-	  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	    Sort by Genre 
-	  </button>
-	  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-	        <a class="dropdown-item" <?= (!isset($_GET['g']) ? 'active' : '') ?>" href="?<?= buildQueryString([], ['g']) ?>">All</a>
-		<?php foreach ($genres as $genre): ?>
-			<a class="dropdown-item" <?= ($_GET['g'] == $genre['ID'] ? 'active' : '') ?>" href="?<?= buildQueryString(['g' => $genre['ID']]) ?>"><?= $genre['NAME'] ?></a>
-		<?php endforeach; ?>
-
-	  </div>
-	</div>
-
-
         <table class="table table-striped no-top">
             <thead>
             <tr>
@@ -50,7 +53,7 @@
                         <a href="movie.php?<?= buildQueryString(['m' => $movieResult['ID']]) ?>"><?= $movieResult['NAME'] ?></a>
                     </td>
                     <td><?= $movieResult['MPAA_RATING'] ?></td>
-                    <td><?= $movieResult['RUNTIME']*1 ?> min</td>
+                    <td><?= $movieResult['RUNTIME'] * 1 ?> min</td>
                     <td><?= $movieResult['GENRES'] ?></td>
                     <td><?= $movieResult['RELEASE_DATE'] ?></td>
                     <td>

@@ -7,7 +7,7 @@
 
     <ul class="nav nav-pills float-right">
         <li class="nav-item">
-            <a class="nav-link" href="professionals.php?<?=buildQueryString([],['p','m','r'])?>">Back</a>
+            <a class="nav-link" href="professionals.php?<?= buildQueryString([], ['p', 'm', 'r']) ?>">Back</a>
         </li>
     </ul>
 
