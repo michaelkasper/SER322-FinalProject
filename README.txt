@@ -22,3 +22,12 @@ change DB_USER, DB_PASSWORD, and DB_HOST if needed
 navigate to C:\xampp\htdocs\SER322-FinalProject-master\SER322-FinalProject-master\www
 rightclick index.php and open with a web browser
 change the URL to: http://localhost/index.php
+
+
+If the below error is encountered, please run the following SQL statement as root: (this error occured while running on Ubuntu)
+
+ERROR:
+Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'TEAM05_MOVIES.m.ID' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+
+SQL:
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
