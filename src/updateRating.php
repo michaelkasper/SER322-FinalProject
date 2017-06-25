@@ -11,7 +11,7 @@ if (
     && is_numeric($_GET['m'])
     && is_numeric($_GET['u'])
 ) {
-    $db->query("
+    $db->insert("
             INSERT INTO RATING (`MOVIE_ID`, `USER_ID`, `RATING`) 
             VALUES ('{$db->escape($_GET['m'])}','{$db->escape($_GET['u'])}','{$db->escape($_GET['r'])}')
             ON duplicate KEY UPDATE `RATING` = values(RATING);
