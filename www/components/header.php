@@ -3,7 +3,7 @@
     <?php if ($config['showNav']): ?>
         <ul class="nav nav-pills float-right">
             <li class="nav-item">
-                <a class="nav-link active" href="/">Logout</a>
+                <a class="nav-link active" href="/SER322-FinalProject-master/SER322-FinalProject-master/www/index.php">Logout</a>
             </li>
         </ul>
     <?php endif; ?>
