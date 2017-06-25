@@ -41,7 +41,7 @@
                         <td><?= $movieResult['MPAA_RATING'] ?></td>
                         <td><?= $movieResult['RELEASE_DATE'] ?></td>
                         <td>
-                            <div class="rating-block">
+                            <div class="rating-block" style="white-space: nowrap;">
                                 <?php for ($i = 1 ;$i <= 5 ;$i++): ?>
                                     <button onclick="window.location='?<?= buildQueryString([
                                         'm' => $movieResult['ID'], 'r' => $i
@@ -57,6 +57,7 @@
 
     </div>
 </div>
+<?php include('components/footer.php') ?>
 
 </body>
 </html>

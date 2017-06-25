@@ -3,6 +3,7 @@
 class db
 {
     private $dbc;
+    private $queries = [];
 
     public function __construct()
     {
@@ -13,11 +14,15 @@ class db
 
     public function insert($query, $ignoreErrors = false)
     {
-        $response = @mysqli_query($this->dbc, $query);
+
+        $start           = microtime();
+        $response        = @mysqli_query($this->dbc, $query);
+        $end             = microtime();
+        $this->queries[] = [$query, $end - $start];
         if ($response) {
             return $response;
         } else if (!$ignoreErrors) {
-            echo 'QUERY: '.$query.'/r';
+            echo 'QUERY: ' . $query . '/r';
             echo mysqli_error($this->dbc);
             exit;
         }
@@ -25,7 +30,11 @@ class db
 
     public function query($query, $ignoreErrors = false)
     {
-        $response = @mysqli_query($this->dbc, $query);
+        $start           = microtime();
+        $response        = @mysqli_query($this->dbc, $query);
+        $end             = microtime();
+        $this->queries[] = [$query, $end - $start];
+
         if ($response) {
             $select = [];
             while ($row = mysqli_fetch_assoc($response)) {
@@ -37,6 +46,11 @@ class db
             exit;
         }
         return [];
+    }
+
+    public function getQueries()
+    {
+        return $this->queries;
     }
 
     public function getInsertId()

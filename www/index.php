@@ -20,6 +20,9 @@
     </div>
 </div>
 
+
+<?php include('components/footer.php') ?>
+
 <script>
     $(function () {
         $('#login').change(function () {
